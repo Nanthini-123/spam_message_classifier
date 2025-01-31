@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam and URL Classifier</title>
+</head>
+<body>
+    <h1>Spam Message and URL Classifier</h1>
+
+    <h2>Classify Message</h2>
+    <textarea id="message" placeholder="Enter message here"></textarea>
+    <button onclick="classifyMessage()">Classify Message</button>
+    <p id="messageResult"></p>
+
+    <h2>Classify URL</h2>
+    <input type="text" id="url" placeholder="Enter URL here">
+    <button onclick="classifyURL()">Classify URL</button>
+    <p id="urlResult"></p>
+
+    <script>
+        // Function to classify a message
+        function classifyMessage() {
+            const message = document.getElementById('message').value;
+            fetch('/classify_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })  // Send the message as JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('messageResult').innerText = 'Prediction: ' + data.prediction;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to classify a URL
+        function classifyURL() {
+            const url = document.getElementById('url').value;
+            fetch('/classify_url', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: url })  // Send the URL as JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('urlResult').innerText = 'Prediction: ' + data.prediction;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

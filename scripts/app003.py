@@ -54,7 +54,7 @@ def classify_message():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
+    
 # Keyword-based phishing detection
 PHISHING_KEYWORDS = {"free", "money", "cash", "win", "winner", "prize", "offer", "claim", "click", "congratulations"}
 # Simple keyword-based phishing detection
@@ -62,6 +62,8 @@ PHISHING_KEYWORDS = {"free", "money", "cash", "win", "offer", "prize", "click", 
 # Keyword-based phishing detection
 PHISHING_KEYWORDS = {"login", "verify", "update", "bank", "secure", "account", "confirm", "free", "gift", "claim"}
 
+
+    
 
 @app.route("/classify_url", methods=["POST"])
 def classify_url():
@@ -91,8 +93,6 @@ def classify_url():
 @app.route('/favicon.ico')
 def favicon():
     return '', 204
-if __name__ == "__main__":
-    app.run(debug=True, host="127.0.0.1", port=8000)
-# Run the Flask app
-if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+import os
+port = int(os.environ.get("PORT", 10000))  # Use Render's assigned port
+app.run(host="0.0.0.0", port=port)
